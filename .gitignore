@@ -1,0 +1,16 @@
+target/
+.idea/
+.vscode/
+*.iml
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+
+# Local environment and secrets
+.env
+.env.*
+*_credentials.csv
+
+# AWS/SAM build output
+.aws-sam/
