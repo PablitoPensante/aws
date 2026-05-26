@@ -13,6 +13,7 @@ Globals:
       Variables:
         PRODUCTS_TABLE_NAME: !Ref ProductsTable
         SALES_TABLE_NAME: !Ref SalesTable
+        USERS_TABLE_NAME: !Ref UsersTable
 
 Resources:
   PosApi:
@@ -39,6 +40,8 @@ Resources:
             TableName: !Ref ProductsTable
         - DynamoDBCrudPolicy:
             TableName: !Ref SalesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UsersTable
       Events:
         Products:
           Type: HttpApi
@@ -81,6 +84,17 @@ Resources:
         - AttributeName: id
           KeyType: HASH
 
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: usuario
+          AttributeType: S
+      KeySchema:
+        - AttributeName: usuario
+          KeyType: HASH
+
 Outputs:
   ApiBaseUrl:
     Description: Base URL for the POS API.
@@ -91,3 +105,6 @@ Outputs:
   SalesTableName:
     Description: DynamoDB table for sales.
     Value: !Ref SalesTable
+  UsersTableName:
+    Description: DynamoDB table for users and roles.
+    Value: !Ref UsersTable

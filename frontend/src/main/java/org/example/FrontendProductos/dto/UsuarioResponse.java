@@ -1,11 +1,17 @@
 package org.example.FrontendProductos.dto;
 
-public class AuthRequest {
+public class UsuarioResponse {
     private String usuario;
-    private String contrasena;
+    private String estado;
     private String rol;
 
-    public AuthRequest() {
+    public UsuarioResponse() {
+    }
+
+    public UsuarioResponse(String usuario, String estado, String rol) {
+        this.usuario = usuario;
+        this.estado = estado;
+        this.rol = rol;
     }
 
     public String getUsuario() {
@@ -16,12 +22,12 @@ public class AuthRequest {
         this.usuario = usuario;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getRol() {

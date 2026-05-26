@@ -36,24 +36,27 @@ export function clearSession() {
  *   the token is absent or malformed.
  */
 export function getCashierName() {
+  return getTokenPayload()?.sub ?? "";
+}
+
+export function getUserRole() {
+  return getTokenPayload()?.rol ?? "";
+}
+
+function getTokenPayload() {
   const token = getToken();
-  if (!token) return "";
+  if (!token) return null;
 
   try {
-    // JWT structure: header.payload.signature
     const parts = token.split(".");
-    if (parts.length !== 3) return "";
+    if (parts.length !== 3) return null;
 
-    // Base64url → Base64 → decode
     const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
-    // Pad to a multiple of 4
     const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, "=");
     const jsonStr = atob(padded);
-    const payload = JSON.parse(jsonStr);
-
-    return payload.sub ?? "";
+    return JSON.parse(jsonStr);
   } catch {
-    return "";
+    return null;
   }
 }
 

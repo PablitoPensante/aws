@@ -53,6 +53,17 @@ Resources:
         - AttributeName: id
           KeyType: HASH
 
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: usuario
+          AttributeType: S
+      KeySchema:
+        - AttributeName: usuario
+          KeyType: HASH
+
   SalesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -119,3 +130,6 @@ Outputs:
   ProductsTableName:
     Description: Products DynamoDB table name.
     Value: !Ref ProductsTable
+  UsersTableName:
+    Description: Users DynamoDB table name.
+    Value: !Ref UsersTable
