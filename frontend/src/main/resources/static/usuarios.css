@@ -282,3 +282,12 @@ td {
   background: #303030;
   color: var(--muted);
 }
+
+.table-wrapper {
+  background: #303030;
+  border-radius: var(--radius);
+}
+
+table {
+  background: #343434;
+}

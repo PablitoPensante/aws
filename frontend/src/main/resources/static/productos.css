@@ -385,3 +385,18 @@ td {
     color: var(--text);
     border: 1px solid var(--border);
 }
+
+.badge.activo {
+    background: rgba(192, 76, 196, 0.2);
+    color: #f0abfc;
+}
+
+.badge.inactivo {
+    background: rgba(239, 68, 68, 0.18);
+    color: #fca5a5;
+}
+
+.table-wrapper {
+    background: #303030;
+    border-radius: var(--radius);
+}

@@ -369,3 +369,39 @@ td {
   border-color: var(--border);
   color: var(--muted);
 }
+
+.summary-card strong,
+.breakdown strong,
+td.amount {
+  color: #f4f4f5;
+}
+
+.summary-card strong {
+  color: #f0abfc;
+}
+
+.breakdown div,
+.breakdown__total {
+  border-color: #585858;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.85;
+}
+
+.table-wrapper {
+  background: #303030;
+  border-radius: var(--radius);
+}
+
+table {
+  background: #343434;
+}
+
+.closing-status.ok,
+.closing-status.warn,
+.closing-status.bad {
+  background: #303030;
+  border-color: var(--border);
+}

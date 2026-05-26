@@ -1170,3 +1170,61 @@ textarea::placeholder {
 .receipt-line {
   border-color: var(--color-border);
 }
+
+.quick-product__button,
+.cart-totals,
+.cart-list-header,
+.payment-total-display,
+#receipt-content,
+.modal-box,
+.search-result {
+  background: #303030;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.quick-product__button {
+  background: #3f3f3f;
+}
+
+.quick-product__name,
+.search-result__name,
+.cart-total-row span,
+.cart-heading__hint,
+.cart-list-header,
+.empty-cart {
+  color: #e5e7eb;
+}
+
+.quick-product__price,
+.price--total,
+.summary-card strong,
+.payment-total-display {
+  color: #f0abfc;
+}
+
+.cart-total-row,
+.cart-total-row--grand {
+  color: var(--color-text);
+}
+
+.cart-total-row--grand {
+  border-top-color: var(--color-border);
+}
+
+.btn:disabled,
+.btn-primary:disabled {
+  background: rgba(192, 76, 196, 0.35);
+  color: rgba(255, 255, 255, 0.72);
+  border-color: rgba(192, 76, 196, 0.28);
+  opacity: 1;
+}
+
+.price--discount {
+  color: #f87171;
+}
+
+.price--subtotal,
+.price--change {
+  color: #f4f4f5;
+}

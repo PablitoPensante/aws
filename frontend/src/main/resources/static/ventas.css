@@ -270,3 +270,17 @@ td {
   background: rgba(192, 76, 196, 0.18);
   color: #f0abfc;
 }
+
+.summary-card strong,
+td.amount {
+  color: #f0abfc;
+}
+
+.table-wrapper {
+  background: #303030;
+  border-radius: var(--radius);
+}
+
+table {
+  background: #343434;
+}
