@@ -49,37 +49,11 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(token, usuario.getUsuario(), usuario.getRol()));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody AuthRequest request) {
-        String usuario = request.getUsuario() == null ? "" : request.getUsuario().trim();
-        String contrasena = request.getContrasena() == null ? "" : request.getContrasena().trim();
-
-        if (usuario.isBlank() || contrasena.isBlank()) {
-            return ResponseEntity.badRequest()
-                    .body(java.util.Map.of("message", "Usuario y contraseña son obligatorios"));
-        }
-
-        if (authService.buscarPorUsuario(usuario).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(java.util.Map.of("message", "El usuario ya existe"));
-        }
-
-        Usuario nuevoUsuario = authService.registrar(usuario, contrasena);
-        String token = jwtService.generateToken(
-                nuevoUsuario.getUsuario(),
-                nuevoUsuario.getRol(),
-                nuevoUsuario.getEstado()
-        );
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new AuthResponse(token, nuevoUsuario.getUsuario(), nuevoUsuario.getRol()));
-    }
-
     @GetMapping("/usuarios")
     public ResponseEntity<?> listarUsuarios(Authentication authentication) {
         if (!esAdmin(authentication)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(java.util.Map.of("message", "Solo un administrador puede consultar usuarios"));
+                    .body(java.util.Map.of("message", "Solo un administrador puede consultar clientes"));
         }
 
         List<UsuarioResponse> usuarios = authService.listarUsuarios().stream()
@@ -93,7 +67,7 @@ public class AuthController {
     public ResponseEntity<?> crearUsuario(@RequestBody AuthRequest request, Authentication authentication) {
         if (!esAdmin(authentication)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(java.util.Map.of("message", "Solo un administrador puede crear usuarios"));
+                    .body(java.util.Map.of("message", "Solo un administrador puede registrar clientes"));
         }
 
         String usuario = request.getUsuario() == null ? "" : request.getUsuario().trim();
@@ -112,7 +86,7 @@ public class AuthController {
 
         if (authService.buscarPorUsuario(usuario).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(java.util.Map.of("message", "El usuario ya existe"));
+                    .body(java.util.Map.of("message", "El cliente ya existe"));
         }
 
         Usuario nuevoUsuario = authService.registrar(usuario, contrasena, rol);
@@ -124,7 +98,7 @@ public class AuthController {
     public ResponseEntity<?> eliminarUsuario(@PathVariable String usuario, Authentication authentication) {
         if (!esAdmin(authentication)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(java.util.Map.of("message", "Solo un administrador puede borrar usuarios"));
+                    .body(java.util.Map.of("message", "Solo un administrador puede borrar clientes"));
         }
 
         if (authentication != null && usuario.equals(authentication.getName())) {
@@ -135,7 +109,7 @@ public class AuthController {
         boolean eliminado = authService.eliminar(usuario);
         if (!eliminado) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(java.util.Map.of("message", "Usuario no encontrado"));
+                    .body(java.util.Map.of("message", "Cliente no encontrado"));
         }
 
         return ResponseEntity.noContent().build();

@@ -291,3 +291,97 @@ th {
     }
 
 }
+
+/* Dark admin shell */
+:root {
+    --bg-1: #252525;
+    --bg-2: #2c2c2c;
+    --bg-3: #1c1c1c;
+    --panel: #3a3a3a;
+    --panel-soft: #2b2b2b;
+    --text: #f4f4f5;
+    --muted: #b8b8b8;
+    --border: #4a4a4a;
+    --primary: #c04cc4;
+    --primary-hover: #d75adb;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --secondary: #414141;
+    --shadow: 0 22px 48px rgba(0, 0, 0, 0.32);
+    --radius: 10px;
+}
+
+body.app-body {
+    background:
+            radial-gradient(circle at 72% 18%, rgba(0, 0, 0, 0.38), transparent 28%),
+            linear-gradient(135deg, var(--bg-2), var(--bg-1) 48%, var(--bg-3));
+}
+
+.sidebar,
+.main-panel,
+.card-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+
+.sidebar {
+    background: #2e2e2e;
+    border-radius: 12px;
+}
+
+.sidebar-box {
+    background: #3b3b3b;
+    border: 1px solid #4b4b4b;
+    border-radius: 8px;
+}
+
+.muted,
+.light {
+    color: var(--muted);
+}
+
+input,
+textarea,
+select,
+table {
+    background: #343434;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #9ca3af;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(192, 76, 196, 0.22);
+}
+
+th {
+    background: #303030;
+    color: #e6e6e6;
+}
+
+td {
+    border-bottom-color: #474747;
+}
+
+.btn-primary {
+    background: var(--primary);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--text);
+    border: 1px solid var(--border);
+}

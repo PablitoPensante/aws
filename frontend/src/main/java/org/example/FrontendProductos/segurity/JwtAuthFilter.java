@@ -55,7 +55,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 || path.startsWith("/modules/")
                 || path.startsWith("/tests/")
                 || path.equals("/auth")
-                || path.equals("/register")
                 || path.equals("/favicon.ico");
     }
 

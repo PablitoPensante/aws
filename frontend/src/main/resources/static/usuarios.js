@@ -18,7 +18,7 @@ function requireAdmin() {
   }
 
   if (getUserRole() !== "ADMIN") {
-    setMessage("error", "Solo los administradores pueden gestionar usuarios.");
+    setMessage("error", "Solo los administradores pueden gestionar clientes.");
     usersBody.innerHTML = `<tr><td colspan="4">Acceso restringido.</td></tr>`;
     form.querySelectorAll("input, select, button").forEach((field) => field.disabled = true);
     return false;
@@ -56,7 +56,7 @@ function renderUsers(users) {
   const currentUser = getCashierName();
 
   if (!users.length) {
-    usersBody.innerHTML = `<tr><td colspan="4">No hay usuarios registrados.</td></tr>`;
+    usersBody.innerHTML = `<tr><td colspan="4">No hay clientes registrados.</td></tr>`;
     return;
   }
 
@@ -105,7 +105,7 @@ form.addEventListener("submit", async (event) => {
       body: JSON.stringify(payload),
     });
     form.reset();
-    setMessage("success", "Usuario creado correctamente.");
+    setMessage("success", "Cliente registrado correctamente.");
     await loadUsers();
   } catch (error) {
     setMessage("error", error.message);
@@ -119,7 +119,7 @@ usersBody.addEventListener("click", async (event) => {
   const usuario = button.dataset.delete;
   try {
     await fetchJson(`/usuarios/${encodeURIComponent(usuario)}`, { method: "DELETE" });
-    setMessage("success", "Usuario eliminado correctamente.");
+    setMessage("success", "Cliente eliminado correctamente.");
     await loadUsers();
   } catch (error) {
     setMessage("error", error.message);

@@ -306,3 +306,66 @@ td.amount {
     grid-template-columns: 1fr;
   }
 }
+
+/* Dark luxury admin theme */
+:root {
+  --bg: #252525;
+  --surface: #3a3a3a;
+  --border: #4a4a4a;
+  --text: #f4f4f5;
+  --muted: #b8b8b8;
+  --primary: #c04cc4;
+  --danger: #ef4444;
+  --accent: #d75adb;
+  --warning: #f59e0b;
+}
+
+body {
+  background:
+          radial-gradient(circle at 74% 16%, rgba(0,0,0,0.38), transparent 30%),
+          linear-gradient(135deg, #2d2d2d, #252525 50%, #1b1b1b);
+}
+
+.cash-header,
+.cash-panel,
+.summary-card {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+}
+
+.btn,
+input {
+  background: #414141;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-secondary {
+  background: #414141;
+}
+
+th {
+  background: #303030;
+  color: #e6e6e6;
+}
+
+td {
+  border-bottom-color: #474747;
+}
+
+.payment-pill {
+  background: rgba(192, 76, 196, 0.18);
+  color: #f0abfc;
+}
+
+.closing-status {
+  background: #323232;
+  border-color: var(--border);
+  color: var(--muted);
+}

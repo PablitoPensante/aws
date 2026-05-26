@@ -51,7 +51,6 @@ public class SecurityConfig {
                                         "/modules/**",
                                         "/tests/**",
                                         "/auth",
-                                        "/register",
                                         "/favicon.ico"
                                 ).permitAll()
                         .anyRequest().authenticated()
