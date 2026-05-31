@@ -34,7 +34,7 @@ function setMessage(text, isError = false) {
 async function apiFetch(path) {
   const token = getToken();
   if (!token) {
-    window.location.replace("/login.html");
+    window.location.replace("login.html");
     return null;
   }
 
@@ -47,7 +47,7 @@ async function apiFetch(path) {
 
   if (response.status === 401 || response.status === 403) {
     clearSession();
-    window.location.replace("/login.html");
+    window.location.replace("login.html");
     return null;
   }
 
@@ -127,7 +127,7 @@ async function loadSales() {
 reloadBtn.addEventListener("click", loadSales);
 logoutBtn.addEventListener("click", () => {
   clearSession();
-  window.location.replace("/login.html");
+  window.location.replace("login.html");
 });
 
 loadSales();

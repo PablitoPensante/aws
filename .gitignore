@@ -11,6 +11,8 @@ __pycache__/
 .env
 .env.*
 *_credentials.csv
+*accessKeys*.csv
 
 # AWS/SAM build output
 .aws-sam/
+node_modules/

@@ -63,7 +63,7 @@ function clearMessage() {
 }
 
 function redirectToLogin() {
-    window.location.replace("/login.html");
+    window.location.replace("login.html");
 }
 
 function openForm(mode = "create") {

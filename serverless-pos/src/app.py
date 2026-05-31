@@ -21,15 +21,16 @@ def handler(event, context):
         return response(204, None)
 
     try:
-        if path == "/api/products" and method == "GET":
-            return response(200, list_products())
-        if path == "/api/products" and method == "POST":
+        if path in ("/api/products", "/productos") and method == "GET":
+            params = event.get("queryStringParameters") or {}
+            return response(200, search_products(params) if params else list_products())
+        if path in ("/api/products", "/productos") and method == "POST":
             return response(201, save_product(parse_body(event)))
         if path == "/api/products/search" and method == "GET":
             return response(200, search_products(event.get("queryStringParameters") or {}))
-        if path == "/api/sales" and method == "POST":
+        if path in ("/api/sales", "/ventas") and method == "POST":
             return response(201, save_sale(parse_body(event)))
-        if path == "/api/sales" and method == "GET":
+        if path in ("/api/sales", "/ventas") and method == "GET":
             return response(200, list_sales(event.get("queryStringParameters") or {}))
 
         return response(404, {"message": "Route not found"})
@@ -89,9 +90,9 @@ def save_product(payload):
 
 
 def save_sale(payload):
-    items = payload.get("items")
-    if not isinstance(items, list) or not items:
-        raise ValueError("Sale must include at least one item")
+    products = normalize_sale_products(payload)
+    if not products:
+        raise ValueError("Sale must include at least one product")
 
     sale_id = payload.get("id") or str(uuid.uuid4())
     now = int(time.time())
@@ -101,7 +102,8 @@ def save_sale(payload):
         "createdAt": now,
         "cashier": str(payload.get("cashier") or "cashier"),
         "terminalId": str(payload.get("terminalId") or "POS-01"),
-        "items": to_decimal(items),
+        "products": to_decimal(products),
+        "iva": Decimal(str(payload.get("iva", 0))),
         "subtotal": Decimal(str(payload.get("subtotal", 0))),
         "discount": Decimal(str(payload.get("discount", 0))),
         "total": Decimal(str(payload.get("total", 0))),
@@ -111,6 +113,37 @@ def save_sale(payload):
 
     sales_table.put_item(Item=sale)
     return from_decimal(sale)
+
+
+def normalize_sale_products(payload):
+    raw_products = payload.get("products")
+    if not isinstance(raw_products, list):
+        raw_products = payload.get("items")
+    if not isinstance(raw_products, list):
+        return []
+
+    products = []
+    for item in raw_products:
+        if not isinstance(item, dict):
+            continue
+
+        product_id = item.get("productId", item.get("producId"))
+        product_name = item.get("productName", item.get("name", "Producto"))
+        product_price = item.get("productPrice", item.get("unitPrice", 0))
+        product_cost = item.get("productCost", item.get("cost", 0))
+        quantity = item.get("quantity", 1)
+
+        products.append(
+            {
+                "productId": Decimal(str(product_id)),
+                "productName": str(product_name),
+                "productPrice": Decimal(str(product_price)),
+                "productCost": Decimal(str(product_cost)),
+                "quantity": Decimal(str(quantity)),
+            }
+        )
+
+    return products
 
 
 def list_sales(params):

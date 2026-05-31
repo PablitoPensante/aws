@@ -75,7 +75,7 @@ function moveFocusByArrow(event) {
 document.addEventListener("DOMContentLoaded", () => {
   // Task 10.4 — Auth guard: redirect immediately if no valid session
   if (!isAuthenticated()) {
-    window.location.replace("/login.html");
+    window.location.replace("login.html");
     return;
   }
 
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       clearSession();
-      window.location.replace("/login.html");
+      window.location.replace("login.html");
     });
   }
 

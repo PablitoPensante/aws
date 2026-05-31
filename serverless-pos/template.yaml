@@ -30,7 +30,7 @@ Resources:
           - POST
           - OPTIONS
 
-  PosFunction:
+  ProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/
@@ -38,10 +38,6 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref ProductsTable
-        - DynamoDBCrudPolicy:
-            TableName: !Ref SalesTable
-        - DynamoDBCrudPolicy:
-            TableName: !Ref UsersTable
       Events:
         Products:
           Type: HttpApi
@@ -49,17 +45,39 @@ Resources:
             ApiId: !Ref PosApi
             Path: /api/products
             Method: ANY
+        ProductosAlias:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref PosApi
+            Path: /productos
+            Method: ANY
         ProductSearch:
           Type: HttpApi
           Properties:
             ApiId: !Ref PosApi
             Path: /api/products/search
             Method: GET
+
+  SalesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SalesTable
+      Events:
         Sales:
           Type: HttpApi
           Properties:
             ApiId: !Ref PosApi
             Path: /api/sales
+            Method: ANY
+        VentasAlias:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref PosApi
+            Path: /ventas
             Method: ANY
 
   ProductsTable:
