@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clientes | Backoffice Áureo</title>
+    <link rel="stylesheet" href="usuarios.css" />
+</head>
+<body>
+<header class="users-header">
+    <div>
+        <h1>Registro de clientes</h1>
+        <p>Gestiona accesos y roles de Caja Áurea.</p>
+    </div>
+    <nav class="users-actions" aria-label="Navegacion principal">
+        <a class="btn btn-primary" href="pos.html">Abrir Caja</a>
+        <a class="btn btn-secondary" href="productos.html">Inventario</a>
+        <a class="btn btn-secondary" href="ventas.html">Cuentas</a>
+        <a class="btn btn-secondary" href="cuadre.html">Cierre</a>
+        <button id="logout-btn" class="btn btn-danger" type="button">Cerrar sesion</button>
+    </nav>
+</header>
+
+<main class="users-main">
+    <section class="users-panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Nuevo cliente</h2>
+                <p>Solo administradores pueden registrar clientes y asignar roles.</p>
+            </div>
+        </div>
+
+        <form id="user-form" class="user-form" autocomplete="off">
+            <div class="field">
+                <label for="usuario">Cliente</label>
+                <input id="usuario" type="text" placeholder="Nombre de cliente" required />
+            </div>
+            <div class="field">
+                <label for="contrasena">Contraseña</label>
+                <input id="contrasena" type="password" placeholder="Contraseña inicial" required />
+            </div>
+            <div class="field">
+                <label for="rol">Rol</label>
+                <select id="rol">
+                    <option value="CAJERO">Cajero</option>
+                    <option value="ADMIN">Administrador</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Registrar cliente</button>
+        </form>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="users-panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Clientes registrados</h2>
+                <p>Los administradores pueden borrar clientes, excepto su propia cuenta.</p>
+            </div>
+            <button id="reload-btn" class="btn btn-secondary" type="button">Recargar</button>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="users-body">
+                <tr>
+                    <td colspan="4">Cargando usuarios...</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script type="module" src="usuarios.js"></script>
+</body>
+</html>
