@@ -1,33 +1,69 @@
-# Proyecto Pablito - Fullstack POS
+# Caja Aurea - POS Serverless
 
-Proyecto POS con frontend HTML5/CSS/JavaScript, backend local Spring Boot y backend serverless AWS SAM.
+Sistema POS web para inventario, ventas y cierre de caja. El frontend esta publicado en GitHub Pages y el backend funciona con AWS API Gateway, Lambda y DynamoDB.
+
+## Demo
+
+```text
+https://pablitopensante.github.io/aws/
+```
+
+Credenciales:
+
+```text
+Administrador: PablitoInPensante / DGGC1912
+Cajero:        Caja / 123
+```
 
 ## Arquitectura
 
-- `frontend/`: paginas HTML semanticas, CSS propio y JavaScript vanilla modular.
-- `backend/`: API local de desarrollo en Spring Boot.
-- `serverless-pos/`: API Gateway + 2 Lambdas (`ProductsFunction`, `SalesFunction`) + DynamoDB `ProductsTable` y `SalesTable`.
-- `UsersTable`: tabla adicional para usuarios/roles administrativos.
+- Frontend: HTML5, CSS propio y JavaScript vanilla modular.
+- Publicacion web: GitHub Pages desde la rama `gh-pages`.
+- Backend AWS: API Gateway + 2 Lambdas (`ProductsFunction`, `SalesFunction`).
+- Base de datos: DynamoDB `ProductsTable` y `SalesTable`.
+- Extra del sistema: `UsersTable` para usuarios y roles administrativos.
 
-Se eligio JavaScript vanilla porque el examen evalua fundamentos: eventos, asincronismo con `async/await`, consumo API con `fetch`, manejo de errores con `try/catch`, box model, flexbox y grid.
+Se eligio JavaScript vanilla porque el proyecto demuestra directamente eventos del DOM, `fetch`, `async/await`, `try/catch`, box model, flexbox y grid.
 
 ## Estructura
 
 ```text
-.kiro/specs/pos-frontend/
-backend/
-frontend/
-serverless-pos/
+.kiro/specs/pos-frontend/     Specs SDD
+docs/                         Frontend estatico publicado en Pages
+frontend/                     Frontend local Spring Boot
+backend/                      Backend local de desarrollo
+serverless-pos/               Backend AWS SAM
 ```
 
-## Puertos locales
+## GitHub Pages
 
-- Backend ventas: `http://localhost:8081`
-- Frontend: `http://localhost:3000`
+El sitio publicado vive en la rama:
 
-En modo local, el backend usa `frontend/data/productos.json` como catálogo de productos. Así el POS puede buscar productos y registrar ventas sin desplegar DynamoDB.
+```text
+gh-pages
+```
 
-## Ejecutar
+La fuente del sitio dentro de `main` esta en:
+
+```text
+docs/
+```
+
+`docs/config.js` apunta al API Gateway:
+
+```text
+https://jd9zmajy5h.execute-api.us-east-2.amazonaws.com
+```
+
+Para republicar Pages despues de cambiar `docs/`:
+
+```bash
+git subtree split --prefix docs -b gh-pages-publish
+git push origin gh-pages-publish:gh-pages --force
+git branch -D gh-pages-publish
+```
+
+## Ejecutar Local
 
 Desde esta carpeta:
 
@@ -53,45 +89,29 @@ Abrir:
 http://localhost:3000/login.html
 ```
 
-Credenciales:
+Puertos:
 
 ```text
-PablitoInPensante / DGGC1912
-Caja / 123
+Frontend local: http://localhost:3000
+Backend local:  http://localhost:8081
 ```
 
-El POS llama al backend local en:
+## Endpoints
 
-```text
-http://localhost:8081/api/products
-http://localhost:8081/api/sales
-```
-
-El backend serverless tambien expone las rutas del examen:
+Rutas requeridas por el examen:
 
 ```text
 GET  /productos
 POST /ventas
 ```
 
-## Modos
+Rutas internas equivalentes:
 
-Modo local:
-
-```bash
-./configure-frontend.sh local
-```
-
-Modo AWS/serverless, despues de desplegar `serverless-pos`:
-
-```bash
-./configure-frontend.sh serverless https://TU_API.execute-api.REGION.amazonaws.com
-```
-
-## Verificar todo
-
-```bash
-./check-ready.sh
+```text
+GET  /api/products
+GET  /api/products/search?barcode=1
+POST /api/sales
+GET  /api/sales
 ```
 
 ## Proceso SDD
@@ -102,38 +122,6 @@ Modo AWS/serverless, despues de desplegar `serverless-pos`:
 .kiro/specs/pos-frontend/tasks.md
 ```
 
-## Pantallas
-
-```text
-http://localhost:3000/login.html
-http://localhost:3000/productos.html
-http://localhost:3000/pos.html
-http://localhost:3000/ventas.html
-```
-
-Usuario demo:
-
-```text
-PablitoInPensante / DGGC1912
-```
-
-En el POS presiona `?` o el boton `Atajos` para ver el modo aprendizaje.
-
-## Capturas Para Entrega
-
-- `productos.html` con productos cargados desde API.
-- `pos.html` registrando una venta exitosa.
-- `ventas.html` o comprobante con respuesta del API.
-- Error controlado cuando la API falle o el codigo no exista.
-
-## Flujo completo
-
-1. Crear o revisar productos en `productos.html`.
-2. Vender desde `pos.html`.
-3. Confirmar pago y recibo.
-4. Revisar la venta guardada en `ventas.html`.
-5. Para AWS, desplegar `serverless-pos`, sembrar DynamoDB y cambiar el frontend con `configure-frontend.sh serverless`.
-
 ## Despliegue AWS
 
 ```bash
@@ -142,32 +130,10 @@ sam build
 sam deploy --guided
 ```
 
+## Verificacion
+
+```bash
+./check-ready.sh
+```
+
 No subir `.env`, credenciales CSV, `node_modules`, `.aws-sam`, `target` ni archivos de sistema.
-
-## GitHub Pages
-
-La carpeta publicable es:
-
-```text
-docs/
-```
-
-En GitHub, activar Pages con:
-
-```text
-Settings -> Pages -> Deploy from a branch -> main -> /docs
-```
-
-URL esperada:
-
-```text
-https://pablitopensante.github.io/aws/
-```
-
-`docs/config.js` apunta al backend AWS:
-
-```text
-https://jd9zmajy5h.execute-api.us-east-2.amazonaws.com
-```
-
-El login de Pages crea una sesion local para `PablitoInPensante` o `Caja`; las operaciones de productos y ventas se hacen contra API Gateway.
