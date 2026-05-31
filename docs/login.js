@@ -1,6 +1,8 @@
 const TOKEN_KEY = "access_token";
-const ADMIN_USER = "PablitoInPensante";
-const ADMIN_PASSWORD = "DGGC1912";
+const USERS = [
+  { usuario: "PablitoInPensante", contrasena: "DGGC1912", rol: "ADMIN" },
+  { usuario: "Caja", contrasena: "123", rol: "CAJERO" },
+];
 
 const loginForm = document.getElementById("loginForm");
 const loginMessage = document.getElementById("loginMessage");
@@ -18,11 +20,11 @@ function base64Url(value) {
     .replace(/\//g, "_");
 }
 
-function createSessionToken(usuario) {
+function createSessionToken(user) {
   const header = { alg: "none", typ: "JWT" };
   const payload = {
-    sub: usuario,
-    rol: "ADMIN",
+    sub: user.usuario,
+    rol: user.rol,
     iat: Math.floor(Date.now() / 1000),
   };
   return `${base64Url(header)}.${base64Url(payload)}.`;
@@ -49,11 +51,15 @@ loginForm.addEventListener("submit", (event) => {
   const usuario = usuarioInput.value.trim();
   const contrasena = contrasenaInput.value.trim();
 
-  if (usuario !== ADMIN_USER || contrasena !== ADMIN_PASSWORD) {
+  const user = USERS.find(
+    (candidate) => candidate.usuario === usuario && candidate.contrasena === contrasena
+  );
+
+  if (!user) {
     setMessage("error", "Credenciales incorrectas");
     return;
   }
 
-  saveToken(createSessionToken(usuario));
+  saveToken(createSessionToken(user));
   window.location.replace("pos.html");
 });

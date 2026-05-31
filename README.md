@@ -57,6 +57,7 @@ Credenciales:
 
 ```text
 PablitoInPensante / DGGC1912
+Caja / 123
 ```
 
 El POS llama al backend local en:
@@ -169,4 +170,4 @@ https://pablitopensante.github.io/aws/
 https://jd9zmajy5h.execute-api.us-east-2.amazonaws.com
 ```
 
-El login de Pages crea una sesion local para el usuario `PablitoInPensante`; las operaciones de productos y ventas se hacen contra API Gateway.
+El login de Pages crea una sesion local para `PablitoInPensante` o `Caja`; las operaciones de productos y ventas se hacen contra API Gateway.

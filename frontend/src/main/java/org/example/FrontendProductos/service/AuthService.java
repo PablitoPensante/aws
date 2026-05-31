@@ -16,6 +16,7 @@ public class AuthService {
 
     public AuthService() {
         usuarios.add(new Usuario("PablitoInPensante", "DGGC1912", "activo", "ADMIN"));
+        usuarios.add(new Usuario("Caja", "123", "activo", "CAJERO"));
         usuarios.add(new Usuario("cajero", "cajero123", "activo", "CAJERO"));
     }
 
